@@ -1,116 +1,154 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
-  <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
-  <meta name="referrer" content="no-referrer">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Private application</title>
+  <!-- Google tag (gtag.js) -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-WYYDMY13BG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WYYDMY13BG');
+</script>-->
+  <meta charset="utf-8" />
+  <title>retardoclient</title>
+  <meta name="description" content="be retard, play terri">
+  <meta name="keywords"
+    content="territorial.io,territory games,territorial io,map games,conquest games,conquest game,david tschacher,territorial,territory game,io game,io games,territory.io,territory io,territory games io">
+  <meta name="author" content="MohsenEMX, peshomir,orlemley1, David Tschacher">
+  <meta name="viewport" content="width=device-width, maximum-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="manifest.json" />
+
+  <meta name="og:image" content="https://fxclient.github.io/FXclient/assets/logo.png" />
+  <meta property="og:url" content="https://retardoclient.vercel.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="retardoclient">
+  <meta property="og:description" content="be retard, play terri">
+  <meta property="og:image" content="https://fxclient.github.io/FXclient/assets/logo.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="retardoclient">
+  <meta name="twitter:description" content="be retard, play terri">
+  <meta name="twitter:image" content="https://fxclient.github.io/FXclient/assets/logo.png">
+  <meta itemprop="name" content="retardoclient">
+  <meta itemprop="description" content="be retard, play terri">
+  <meta itemprop="image" content="https://fxclient.github.io/FXclient/assets/logo.png">
+
+  <!-- FX Client CSS -->
+  <link rel="stylesheet" href="main.css?1787292249795">
+  <!-- Game CSS -->
   <style>
-    :root { color-scheme: dark; font-family: Arial, sans-serif; }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #050807; color: #f7f9f8; }
-    main { width: min(420px, calc(100vw - 32px)); border: 1px solid #53615a; padding: 28px; background: #0b100e; }
-    h1 { margin: 0 0 10px; font-size: 24px; letter-spacing: 0; }
-    p { margin: 0 0 22px; color: #b9c3be; line-height: 1.45; }
-    label { display: block; margin-bottom: 8px; font-weight: 700; }
-    input { width: 100%; height: 44px; padding: 0 12px; border: 1px solid #6b7871; background: #020403; color: #fff; font: inherit; }
-    button { width: 100%; height: 44px; margin-top: 12px; border: 1px solid #75c794; background: #176b35; color: #fff; font: 700 16px Arial, sans-serif; cursor: pointer; }
-    button:disabled { opacity: .55; cursor: wait; }
-    #status { min-height: 22px; margin: 12px 0 0; color: #ff9d9d; }
+    html,
+    body {
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      background: rgb(0, 0, 0);
+      color: rgb(255, 255, 255);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    a {
+      color: rgb(225, 225, 255);
+    }
   </style>
-</head>
-<body>
-  <main>
-    <h1>Private application</h1>
-    <p>This deployment is encrypted. Enter its local access key to continue.</p>
-    <form id="unlockForm">
-      <label for="accessKey">Access key</label>
-      <input id="accessKey" type="password" autocomplete="current-password" required autofocus>
-      <button id="unlockButton" type="submit">Unlock</button>
-      <div id="status" role="status" aria-live="polite"></div>
-    </form>
-  </main>
   <script>
-    const decoder = new TextDecoder();
-    const fromBase64 = (value) => Uint8Array.from(atob(value), (character) => character.charCodeAt(0));
-    const form = document.getElementById("unlockForm");
-    const input = document.getElementById("accessKey");
-    const button = document.getElementById("unlockButton");
-    const status = document.getElementById("status");
+    // adapted from https://stackoverflow.com/a/44593894 and https://stackoverflow.com/a/40446448
 
-    async function decryptFile(key, encrypted) {
-      const combined = new Uint8Array(fromBase64(encrypted.data).length + 16);
-      combined.set(fromBase64(encrypted.data));
-      combined.set(fromBase64(encrypted.tag), combined.length - 16);
-      const plaintext = await crypto.subtle.decrypt(
-        { name: "AES-GCM", iv: fromBase64(encrypted.iv), tagLength: 128 },
-        key,
-        combined,
-      );
-      return decoder.decode(plaintext);
+    function showUpdatePrompt(/** @type {ServiceWorker} */ sw) {
+      console.log("showing update prompt")
+      document.getElementById("updateNotification").style.display = "block";
+      document.getElementById("swUpdateButton").addEventListener("click", () => {
+        sw.postMessage({ update: true });
+      })
     }
 
-    async function unlock(password) {
-      const payload = await fetch("payload.json", { cache: "no-store", referrerPolicy: "no-referrer" }).then((response) => {
-        if (!response.ok) throw new Error("Encrypted payload unavailable.");
-        return response.json();
+    document.addEventListener("DOMContentLoaded", function () {
+      if (!("serviceWorker" in navigator)) return;
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        console.log("Controlling service worker changed, refreshing page");
+        window.location.reload();
       });
-      const material = await crypto.subtle.importKey(
-        "raw",
-        new TextEncoder().encode(password),
-        "PBKDF2",
-        false,
-        ["deriveKey"],
-      );
-      const key = await crypto.subtle.deriveKey(
-        { name: "PBKDF2", hash: "SHA-256", salt: fromBase64(payload.salt), iterations: payload.iterations },
-        material,
-        { name: "AES-GCM", length: 256 },
-        false,
-        ["decrypt"],
-      );
-      const names = ["index.html", "main.css", "variables.js", "fx.bundle.js", "game.js"];
-      const values = await Promise.all(names.map((name) => decryptFile(key, payload.files[name])));
-      return Object.fromEntries(names.map((name, index) => [name, values[index]]));
-    }
 
-    function runScript(source, name) {
-      const script = document.createElement("script");
-      script.textContent = source + "\n//# sourceURL=" + name;
-      document.body.appendChild(script);
-    }
+      navigator.serviceWorker.register("./sw2.js").then(function (registration) {
+        if (!navigator.serviceWorker.controller) return;
+        // if there's an updated worker already waiting, update
+        if (registration.waiting) return showUpdatePrompt(registration.waiting);
 
-    function launch(files) {
-      const parsed = new DOMParser().parseFromString(files["index.html"], "text/html");
-      parsed.querySelectorAll("script, link[rel='stylesheet'], link[rel='manifest']").forEach((node) => node.remove());
-      document.documentElement.lang = parsed.documentElement.lang || "en";
-      document.head.innerHTML = parsed.head.innerHTML;
-      document.body.innerHTML = parsed.body.innerHTML;
-      const style = document.createElement("style");
-      style.textContent = files["main.css"];
-      document.head.appendChild(style);
-      runScript(files["variables.js"], "variables.js");
-      runScript(files["fx.bundle.js"], "fx.bundle.js");
-      runScript(files["game.js"], "game.js");
-      if (typeof window.aiCommand746 === "function") window.aiCommand746(0);
-    }
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      button.disabled = true;
-      status.textContent = "Decrypting...";
-      try {
-        const files = await unlock(input.value);
-        input.value = "";
-        launch(files);
-      } catch (error) {
-        status.textContent = "Invalid access key.";
-        button.disabled = false;
-        input.select();
-      }
+        // if a worker in the "installing" state becomes "installed", update
+        function handleInstalling() {
+          var sw = registration.installing;
+          sw.addEventListener("statechange", function () {
+            if (sw.state === "installed") showUpdatePrompt(sw);
+          })
+        }
+        // if there's an updated worker installing, track its progress
+        if (registration.installing) handleInstalling();
+        // otherwise, listen for new workers arriving
+        registration.addEventListener('updatefound', handleInstalling);
+      });
     });
   </script>
+</head>
+
+<body onload="aiCommand746(0);">
+  <canvas id="canvasA" width="128" height="128"></canvas>
+  <span id="windowContainer">
+    <div class="window flex-column settings" style="display:none">
+      <h1>Settings</h1>
+      <div class="scrollable"></div>
+      <hr>
+      <footer>
+        <button onclick="__fx.settingsManager.resetAll()">Reset Settings</button>
+        <button onclick="__fx.settingsManager.save()">Save Settings</button>
+        <button onclick="__fx.settingsManager.importFromFile()">Import</button>
+        <button onclick="__fx.settingsManager.exportToFile()">Export</button>
+      </footer>
+    </div>
+    <div class="window flex-column" id="customLobbyJoinMenu" style="display: none">
+      <input type="text" id="lobbyCode" placeholder="Enter lobby code">
+      or
+      <div>
+        <button id="createLobbyButton">Create new lobby</button>
+        <label for="region">in region:</label>
+        <select id="customLobbyRegion" name="region"
+        title="Note: Region selection is a best effort, not a guarantee. The regions listed are only a subset of all the possible locations where a lobby can be created.">
+          <option value="default" selected>Automatic (closest to you)</option>
+          <option value="wnam">Western North America</option>
+          <option value="enam">Eastern North America</option>
+          <option value="weur">Western Europe</option>
+          <option value="eeur">Eastern Europe</option>
+          <option value="apac">Asia-Pacific</option>
+          <option value="oc">Oceania</option>
+        </select>
+      </div>
+    </div>
+    <div class="window scrollable selectable" id="playerlist" style="display: none;">
+      <h1>Player List</h1>
+      <table>
+        <tbody id="playerlist_content"></tbody>
+      </table>
+    </div>
+    <div class="window scrollable selectable" id="donationhistory" style="display:none">
+      <h1>Donation history for </h1>
+      <p id="donationhistory_note">Note: donations from bots are not shown here</p>
+      <table>
+        <tbody id="donationhistory_content"></tbody>
+      </table>
+    </div>
+    <div class="window" style="display: none" id="updateNotification">
+      <h3>A new version of FX is available! Click the "Update" button below to update</h3>
+      <button id="swUpdateButton">Update</button>
+      <button onclick="document.getElementById('updateNotification').style.display = 'none'">Dismiss</button>
+    </div>
+  </span>
+  <script src="variables.js?1787292249795"></script>
+  <script src="fx.bundle.js?1787292249795"></script>
+  <script src="game.js?1787292249795"></script>
 </body>
+
 </html>

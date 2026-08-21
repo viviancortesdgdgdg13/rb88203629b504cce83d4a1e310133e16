@@ -1,0 +1,19 @@
+{
+    "name": "retardoclient",
+    "short_name": "retardoclient",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#000000",
+    "description": "be retard, play terri",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "64x64"
+        },
+        {
+            "src": "assets/logo.png",
+            "sizes": "any",
+            "type": "image/png"
+        }
+    ]
+}
