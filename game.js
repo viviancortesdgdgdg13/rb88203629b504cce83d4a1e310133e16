@@ -809,11 +809,13 @@ function dH() {
 	const __fxGetAutoSpawnStatus = () => {
 		const player = o.co,
 			connected = o.kg || f2.aw.a5e(f2.aw.p4),
-			ready = connected && o.db && !o.ke && Number.isInteger(player) && player >= 0 && player < o.bI && eF.hu[player] !== 0;
+			selectableSpawn = Boolean(o.db && w.cO.iT(0)),
+			ready = connected && selectableSpawn && !o.ke && Number.isInteger(player) && player >= 0 && player < o.bI && eF.hu[player] !== 0;
 		if (!ready) return {
 			ready: false,
 			singleplayer: o.kg,
-			connected: connected
+			connected: connected,
+			selectableSpawn: selectableSpawn
 		};
 		const selectionStep = Number.isInteger(dY.p5 && dY.p5.ww) ? dY.p5.ww : null,
 			selectionMax = Number.isInteger(o.x1) ? o.x1 : null,
@@ -825,6 +827,7 @@ function dH() {
 			ready: true,
 			singleplayer: o.kg,
 			connected: connected,
+			selectableSpawn: selectableSpawn,
 			gameMode: o.fW,
 			isOneVsOne: o.fW === 8,
 			currentSpawn: currentSpawn,
