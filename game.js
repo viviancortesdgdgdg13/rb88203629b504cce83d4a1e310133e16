@@ -846,15 +846,11 @@ function dH() {
 				width = p.eP,
 				height = p.eQ,
 				freeLand = new Uint8Array(width * height),
-				landMask = new Uint8Array(width * height),
 				spawns = [];
 			for (let y = 0; y < height; y++)
 				for (let x = 0; x < width; x++) {
-					const pixel = ee.mQ(x, y),
-						index = y * width + x,
-						isLand = ee.lV(pixel);
-					landMask[index] = isLand ? 1 : 0;
-					freeLand[index] = isLand && (!ee.mU(pixel) || ee.sV(player, pixel)) ? 1 : 0
+					const pixel = ee.mQ(x, y);
+					freeLand[y * width + x] = ee.lV(pixel) && (!ee.mU(pixel) || ee.sV(player, pixel)) ? 1 : 0
 				}
 			for (let id = 0; id < o.bI; id++)
 				if (id !== player && eF.fQ[id] > 0) spawns.push({
@@ -870,7 +866,6 @@ function dH() {
 				width: width,
 				height: height,
 				freeLand: freeLand,
-				landMask: landMask,
 				spawns: spawns,
 				humanCount: o.cF,
 				playerCount: o.cF,
