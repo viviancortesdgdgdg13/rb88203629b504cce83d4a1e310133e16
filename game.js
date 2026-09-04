@@ -520,6 +520,9 @@ function dH() {
 			},
 			get eQ() {
 				return bV.fd
+			},
+			get eR() {
+				return bV.f8
 			}
 		};
 	const __fxHasBorderState = player => Number.isInteger(player) && player >= 0 && player < o.bI && eF.aOq != null && eF.aOq[player] != null;
@@ -830,6 +833,7 @@ function dH() {
 			connected: connected,
 			selectableSpawn: selectableSpawn,
 			gameMode: o.fW,
+			mapId: p.eR,
 			isOneVsOne: o.fW === 8,
 			currentSpawn: currentSpawn,
 			selectionStep: selectionStep,
@@ -846,11 +850,14 @@ function dH() {
 				width = p.eP,
 				height = p.eQ,
 				freeLand = new Uint8Array(width * height),
+				ownableLand = new Uint8Array(width * height),
 				spawns = [];
 			for (let y = 0; y < height; y++)
 				for (let x = 0; x < width; x++) {
-					const pixel = ee.mQ(x, y);
-					freeLand[y * width + x] = ee.lV(pixel) && (!ee.mU(pixel) || ee.sV(player, pixel)) ? 1 : 0
+					const pixel = ee.mQ(x, y),
+						ownable = ee.lV(pixel);
+					ownableLand[y * width + x] = ownable ? 1 : 0;
+					freeLand[y * width + x] = ownable && (!ee.mU(pixel) || ee.sV(player, pixel)) ? 1 : 0
 				}
 			for (let id = 0; id < o.bI; id++)
 				if (id !== player && eF.fQ[id] > 0) spawns.push({
@@ -866,6 +873,7 @@ function dH() {
 				width: width,
 				height: height,
 				freeLand: freeLand,
+				ownableLand: ownableLand,
 				spawns: spawns,
 				humanCount: o.cF,
 				playerCount: o.cF,
@@ -3459,8 +3467,8 @@ function a2I() {
 
 function dZ() {
 	function a2V(e) {
-		m6(e), u.v(4, 5, new w("🚀 New Game Update", "The game was updated! Please reload the game. An internet connection is required." +
-			"<div style='border: white; border-width: 1px; border-style: solid; margin: 10px; padding: 5px;'><h2>FX Client is not yet compatible with the latest version of the game.</h2><p>Updates should normally be available within a few hours.<br>You can still use FX to play in singleplayer mode.</p></div>",
+		m6(e), u.v(4, 5, new w("🚀 New Game Update",
+			"The game was updated! Please reload the game. An internet connection is required.<div style='border: white; border-width: 1px; border-style: solid; margin: 10px; padding: 5px;'><h2>FX Client is not yet compatible with the latest version of the game.</h2><p>Updates should normally be available within a few hours.<br>You can still use FX to play in singleplayer mode.</p></div>",
 			!0, [new x("⬅️ " + L(40), function() {
 				u.a2W()
 			}), new x("🔄 Reload", function() {
