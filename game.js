@@ -593,8 +593,9 @@ function dH() {
 	};
 	__fx.autoOpening.attack = () => {
 		const player = o.co,
-			fn = this.i8;
-		return __fxHasLivePlayer(player) && typeof fn === 'function' ? (fn.call(this), true) : false
+			active = lF.cY(player, o.bI),
+			available = jG.aQO(player);
+		return __fxHasLivePlayer(player) && (active || available) ? (pH.a2J.a7g(kX.a7h(), o.bI), true) : false
 	};
 	__fx.autoOpening.attackFreeLand = amount => {
 		const player = o.co;
