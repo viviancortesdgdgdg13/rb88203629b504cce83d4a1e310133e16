@@ -36,7 +36,7 @@
   <meta itemprop="image" content="https://fxclient.github.io/FXclient/assets/logo.png">
 
   <!-- FX Client CSS -->
-  <link rel="stylesheet" href="main.css?1788541360530">
+  <link rel="stylesheet" href="main.css?1788626288727">
   <!-- Game CSS -->
   <style>
     html,
@@ -57,39 +57,17 @@
     }
   </style>
   <script>
-    // adapted from https://stackoverflow.com/a/44593894 and https://stackoverflow.com/a/40446448
-
-    function showUpdatePrompt(/** @type {ServiceWorker} */ sw) {
-      console.log("showing update prompt")
-      document.getElementById("updateNotification").style.display = "block";
-      document.getElementById("swUpdateButton").addEventListener("click", () => {
-        sw.postMessage({ update: true });
-      })
-    }
-
     document.addEventListener("DOMContentLoaded", function () {
       if (!("serviceWorker" in navigator)) return;
+      let refreshing = false;
       navigator.serviceWorker.addEventListener("controllerchange", () => {
-        console.log("Controlling service worker changed, refreshing page");
+        if (refreshing) return;
+        refreshing = true;
         window.location.reload();
       });
 
-      navigator.serviceWorker.register("./sw2.js").then(function (registration) {
-        if (!navigator.serviceWorker.controller) return;
-        // if there's an updated worker already waiting, update
-        if (registration.waiting) return showUpdatePrompt(registration.waiting);
-
-        // if a worker in the "installing" state becomes "installed", update
-        function handleInstalling() {
-          var sw = registration.installing;
-          sw.addEventListener("statechange", function () {
-            if (sw.state === "installed") showUpdatePrompt(sw);
-          })
-        }
-        // if there's an updated worker installing, track its progress
-        if (registration.installing) handleInstalling();
-        // otherwise, listen for new workers arriving
-        registration.addEventListener('updatefound', handleInstalling);
+      navigator.serviceWorker.register("./sw2.js", { updateViaCache: "none" }).then(function (registration) {
+        registration.update();
       });
     });
   </script>
@@ -146,9 +124,9 @@
       <button onclick="document.getElementById('updateNotification').style.display = 'none'">Dismiss</button>
     </div>
   </span>
-  <script src="variables.js?1788541360530"></script>
-  <script src="fx.bundle.js?1788541360530"></script>
-  <script src="game.js?1788541360530"></script>
+  <script src="variables.js?1788626288727"></script>
+  <script src="fx.bundle.js?1788626288727"></script>
+  <script src="game.js?1788626288727"></script>
 </body>
 
 </html>

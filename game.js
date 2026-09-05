@@ -11388,7 +11388,7 @@ function aV7() {
 		aWK = 0;
 
 	function aV8() {
-		b1.z.aV8(aWH, aWI)
+		__fx.mobileBackground.handleSocketOpen(aWH), b1.z.aV8(aWH, aWI)
 	}
 
 	function aWN(e) {
@@ -11399,7 +11399,9 @@ function aV7() {
 	function aWO() {}
 
 	function aVF(e) {
-		b1.z.aVF(aWH, e)
+		__fx.mobileBackground.handleSocketClose(aWH, e.code, function() {
+			b1.z.aHc(aWH, aWI, 0)
+		}) || b1.z.aVF(aWH, e)
 	}
 	this.di = function(eG, a2c, aV3) {
 		aWH = eG, aWI = a2c,
@@ -13404,8 +13406,16 @@ function dW() {
 	function ada() {
 		bi.eY = adZ = performance.now(), bi.a1X.ed(), window.requestAnimationFrame(ada)
 	}
+
+	function backgroundTick() {
+		"hidden" === document.visibilityState && (bi.eY = adZ = performance.now(), bi.a1X.ed())
+	}
+
+	function resumeTick() {
+		bi.dq = !0, bi.aVL()
+	}
 	this.di = function() {
-		this.a6B(), window.requestAnimationFrame(ada), this.eY = performance.now()
+		this.a6B(), window.requestAnimationFrame(ada), this.eY = performance.now(), __fx.mobileBackground.attachGameLoop(backgroundTick, resumeTick)
 	}, this.a63 = function() {
 		aE.ha ? (this.a1X = new adK, this.a1X.di()) : aE.l6 ? this.a1X = new adY : (this.a1X = new adD, this.a1X.di())
 	}, this.a6B = function() {
