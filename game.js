@@ -822,8 +822,8 @@ function dI() {
 			connected: connected,
 			selectableSpawn: selectableSpawn
 		};
-		const selectionStep = Number.isInteger(dY.p5 && dY.p5.ww) ? dY.p5.ww : null,
-			selectionMax = Number.isInteger(o.x1) ? o.x1 : null,
+		const selectionStep = null,
+			selectionMax = o.bI,
 			currentSpawn = eF.fQ[player] > 0 ? {
 				x: (eF.eG[player] + eF.eH[player]) >> 1,
 				y: (eF.eJ[player] + eF.eK[player]) >> 1
