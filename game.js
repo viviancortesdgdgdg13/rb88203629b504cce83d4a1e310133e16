@@ -10512,7 +10512,7 @@ function w6() {
 		},
 		hw: (...args) => bi.kk(...args)
 	};
-	const ar = aF,
+	const ar = {},
 		cQ = {
 			get cl() {
 				return bg.nJ
