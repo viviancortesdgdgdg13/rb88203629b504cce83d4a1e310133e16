@@ -1154,6 +1154,7 @@ function my() {
 		n3.nB[id] = 0, 1 === en ? (0 === id ? bb = L(123, [bX.bY[player], bX.bY[n3.n9[0]]]) : 1 === id ? bb = L(124, [bX.bY[player]]) : 2 === id ? bb = L(125, [bX.bY[player]]) : 3 === id && (bb = L(126, [bX.bY[player]])), no(7, 0), nF(n3.nA[id],
 			bb, 7, n3.n9[id], dK.dM, dK.fB, -1, !0)) : (bb = L(0 === id ? 127 : 1 === id ? 128 : 129, [en]), no(7, 0), nF(n3.nA[id], bb, 7, player, dK.dM, dK.fB, -1, !1))
 	}, this.nr = function(id, kP, kQ) {
+		if (!n3) this.k();
 		var ax = aC.j7(),
 			en = n3.nB[id] + 1;
 		n3.nB[id]++, n3.n8[id] = kP, n3.n9[id] = kQ, 1 === en && (n3.ax[id] = ax), (1 === en && (aI.hW < 32 || 2 === aI.aJ) || 1 < en && (n3.ax[id] < ax - 140 || 2 === aI.aJ)) && this.ok(id)
