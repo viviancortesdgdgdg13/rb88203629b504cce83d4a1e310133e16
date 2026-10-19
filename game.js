@@ -11177,8 +11177,9 @@ function a3d() {
 		} : function(m9) {
 			if (8 !== aK.at() && !jg.aOo()) return;
 			if (m9 !== a5.a6.a8) a5.a6.a05(m9, 3244);
-			else if (0 === jz.k6(1)) aC.zK.qI(jz.lj);
-			else {
+			else if (0 === jz.k6(1)) {
+				if (aC.zK && typeof aC.zK.qI === "function") aC.zK.qI(jz.lj);
+			} else {
 				var ce, m9 = jz.k6(2);
 				if (0 === m9) {
 					var bc, oC = jz.k6(9);
