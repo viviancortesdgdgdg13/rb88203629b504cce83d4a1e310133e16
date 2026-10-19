@@ -536,15 +536,16 @@ function hS() {
 	this.fo = 512, this.gZ = 15e8, this.hT = 1e9, this.h2 = 5e4, this.hU = 512, this.hV = 2, this.bS = 0, this.gN = 0, this.hW = 0, this.hX = 0, this.hY = 0, this.hZ = 512, this.ha = 512, this.gY = 150, this.df = !0, this.bG = 0, this.aJ = 0, this
 		.hG = 0, this.bD = !1, this.g1 = 0, this.hb = 0, this.dm = !1, this.hc = 0, this.hd = 0, this.dw = 0, this.dy = 0, this.he = null, this.hf = new hg, this.hh = 30, this.di = 0, this.hi = 0, this.hj = 0, this.hk = 0, this.data = new hl, this
 		.eQ = new hm, this.hn = 0, this.ho = "", this.hp = function() {
-			hq.turnstile.close(), gk.k(), dj.k(), hr.clear(), this.hW = this.gN = this.data.humanCount, this.df = 1 === this.hW, this.bD = !1, this.bG = this.data.isReplay, this.dw = 0 === this.data.gameMode ? [7, 10, 8][this.data.battleRoyaleMode] :
-				this.data.isZombieMode ? 9 : this.data.numberTeams - 2, this.dy = this.data.isContest, this.dm = this.dw < 7 || 9 === this.dw, this.dw = 10 === this.dw && this.df ? 7 : this.dw, this.dw = 8 === this.dw && 2 !== this.gN ? 7 : this.dw,
-				hs.k(), this.hc = this.data.numberTeams, this.data.teamPlayerCount ? this.hd = +(0 < this.data.teamPlayerCount[0]) : (this.hd = 0, this.dm && this.df && (this.data.teamPlayerCount = new Uint16Array(9), this.data.teamPlayerCount.fill(
-					1, 1, this.hc + 1), aI.eQ.ht())), this.hh = this.gN <= 2 ? 30 : this.gN <= 50 ? 40 : 50, this.hb = this.g1 = this.data.selectableSpawn, this.he = this.g1 ? new hu : null, 1 === eo.hv ? this.hZ = this.gN : this.hZ = this.data
-				.playerCount, this.ha = this.hZ, this.hX = this.hZ - this.gN, this.hY = 0, this.bS = this.data.selectedPlayer, this.di = 0, this.hi = 0, this.hj = 0, this.hk = 0, hw.hx(this.data.spawningSeed), hO.k(), bX.k(), hy.k(), hz.i0(), du.cO
-				.i1 = [], du.cJ.i2 = 1, __fx.donationsTracker.reset(), __fx.leaderboardFilter.reset(), __fx.customLobby.isActive() && __fx.customLobby.hideWindow(), g8.k(), this.aJ = 1, h0.k(), i3(), i4.i5(), i6.i7(), i8.k(), i4.k(), ey.k(), i9.k(),
-				f4.k(), iA.k(), iB.iC(), iD.k(), hz.iE(), iF.k(), iG.k(), gC.iH(), eN.k(), f5.k(), f1.k(), aN.k(), iI.putImageData(iJ, 0, 0), aX.k(), aY.k(), aZ.k(), aL.k(), aT.k(), f7.k(), be.k(), aS.k(), f6.k(), aa.k(), aR.k(), aP.k(), aO.k(), iK
-				.k(), iL.k(), iM(), iN.k(), cz.k(), gi.k(), iO.k(), iP.k(), iQ.k(), iR.k(), this.hf.k(), aC.iC(), ct.iT(), 0 === bX.g3[aI.bS] && aO.show(!1, !0), cz.iU(!0), f8.k(), aC.ah = !0, this.bG || this.df && this.g1 || ca.cb.setState(1), this
-				.hn = 0
+			hq.turnstile.close(), gk.k(), dj.k(), hr.clear(), this.hW = this.gN = this.data.humanCount, this.df = 1 === this.hW && !__fx.customLobby.isActive(), this.bD = !1, this.bG = this.data.isReplay, this.dw = 0 === this.data.gameMode ? [7, 10,
+					8
+				][this.data.battleRoyaleMode] : this.data.isZombieMode ? 9 : this.data.numberTeams - 2, this.dy = this.data.isContest, this.dm = this.dw < 7 || 9 === this.dw, this.dw = 10 === this.dw && this.df ? 7 : this.dw, this.dw = 8 === this
+				.dw && 2 !== this.gN ? 7 : this.dw, hs.k(), this.hc = this.data.numberTeams, this.data.teamPlayerCount ? this.hd = +(0 < this.data.teamPlayerCount[0]) : (this.hd = 0, this.dm && this.df && (this.data.teamPlayerCount = new Uint16Array(
+					9), this.data.teamPlayerCount.fill(1, 1, this.hc + 1), aI.eQ.ht())), this.hh = this.gN <= 2 ? 30 : this.gN <= 50 ? 40 : 50, this.hb = this.g1 = this.data.selectableSpawn, this.he = this.g1 ? new hu : null, 1 === eo.hv ? this.hZ =
+				this.gN : this.hZ = this.data.playerCount, this.ha = this.hZ, this.hX = this.hZ - this.gN, this.hY = 0, this.bS = this.data.selectedPlayer, this.di = 0, this.hi = 0, this.hj = 0, this.hk = 0, hw.hx(this.data.spawningSeed), hO.k(), bX
+				.k(), hy.k(), hz.i0(), du.cO.i1 = [], du.cJ.i2 = 1, __fx.donationsTracker.reset(), __fx.leaderboardFilter.reset(), __fx.customLobby.isActive() && __fx.customLobby.hideWindow(), g8.k(), this.aJ = 1, h0.k(), i3(), i4.i5(), i6.i7(), i8
+				.k(), i4.k(), ey.k(), i9.k(), f4.k(), iA.k(), iB.iC(), iD.k(), hz.iE(), iF.k(), iG.k(), gC.iH(), eN.k(), f5.k(), f1.k(), aN.k(), iI.putImageData(iJ, 0, 0), aX.k(), aY.k(), aZ.k(), aL.k(), aT.k(), f7.k(), be.k(), aS.k(), f6.k(), aa
+			.k(), aR.k(), aP.k(), aO.k(), iK.k(), iL.k(), iM(), iN.k(), cz.k(), gi.k(), iO.k(), iP.k(), iQ.k(), iR.k(), this.hf.k(), aC.iC(), ct.iT(), 0 === bX.g3[aI.bS] && aO.show(!1, !0), cz.iU(!0), f8.k(), aC.ah = !0, this.bG || this.df && this
+				.g1 || ca.cb.setState(1), this.hn = 0
 		}, this.iV = function(iW) {
 			eN.iX.iY.length ? this.ho = eN.iX.iY : this.ho = eN.iZ.ia(), __fx.replayHistory.save(this.ho), a5.a6.ib(), hr.clear(), this.aJ = 0, aC.ic(), ca.cb.setState(0), aK.setState(0), hq.dS.show(iW), 2 === this.hn ? aH.a6.eM(0) : 1 === this.hn ?
 				aH.eF(19) : aH.eF(5, 5)
