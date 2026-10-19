@@ -11180,6 +11180,7 @@ function a3d() {
 			else if (0 === jz.k6(1)) {
 				if (typeof aC.zK.qI !== "function") {
 					aI.df = false;
+					eN.k();
 					aC.zK = new qC();
 					aC.zK.k();
 				}
